@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const AuthContext = createContext();
 
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "https://backend.algouni.online";
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState(() => {
@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/api/post/all", { withCredentials: true });
+                const response = await axios.get("https://backend.algouni.online/api/post/all", { withCredentials: true });
                 setPosts(response.data);
             } catch (err) {
                 console.error("Error fetching posts:", err);
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/api/auth/profile", { withCredentials: true });
+                const response = await axios.get("https://backend.algouni.online/api/auth/profile", { withCredentials: true });
                 setAuth({ loggedIn: true, token: response.data.token, role: response.data.role });
                 localStorage.setItem("token", response.data.token);
                 localStorage.setItem("role", response.data.role);
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
     const createPost = async (title, content) => {
         try {
-            const response = await axios.post("http://localhost:5000/api/post/create", { title, content }, { withCredentials: true });
+            const response = await axios.post("https://backend.algouni.online/api/post/create", { title, content }, { withCredentials: true });
             setPosts([...posts, response.data]);
         } catch (err) {
             console.error("Error creating post:", err);
@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (username, password) => {
         try {
-            const response = await axios.post("http://localhost:5000/api/auth/login", { username, password }, { withCredentials: true });
+            const response = await axios.post("https://backend.algouni.online/api/auth/login", { username, password }, { withCredentials: true });
             setAuth({ loggedIn: true, token: response.data.token, role: response.data.role });
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("role", response.data.role);
