@@ -10,7 +10,7 @@ exports.login = async (req, res) => {
             return res.status(401).json({ error: "Invalid credentials" });
         }
         const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
-        res.cookie("token", token, { httpOnly: true, secure: false, maxAge: 3600000 });
+        res.cookie("token", token, { secure: true, sameSite: "None", maxAge: 3600000 });
         res.json({ token, role: user.role }); // Return the user's role along with the token
     } catch (err) {
         res.status(500).json({ error: "Error logging in" });
